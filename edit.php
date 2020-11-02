@@ -1,74 +1,47 @@
 <?php
 
-include 'db.php';
+require 'db.php';
 
 $utitle = $uemail = $uingredients = '';
 $errors = array('uemail'=>'' , 'utitle'=>'', 'uingredients'=>'');
 
-if(isset($_GET['id'])) {
-
-    $id = mysqli_real_escape_string($conn,$_GET['id']);
-
-    //write query
-
-    $querypdetails = "SELECT * FROM pizzas WHERE id = $id";
-
-    // make a query to show the result  in the webpage
-
-    $result = mysqli_query($conn, $querypdetails);
-
-    // fetch result/row in an array format
-
-    $pizza = mysqli_fetch_assoc($result);
-
-    // free result
-
-    mysqli_free_result($result);
-
-    //close connection
-    mysqli_close($conn);
-}
-
 if(isset($_GET['id'])){
     
 
-        if (isset($_POST['update']))  {
-        //$updateID = mysqli_real_escape_string($conn, $_GET['id']);
-        //$id = htmlentities($_POST['id']);
+    if (isset($_POST['update']))  {
 
+        // if there is no error then its time to save to database
     
-                // if there is no error then its time to save to database
-            
 
-                    $fetched_id = $_GET['id'];
-                    // $id = mysqli_real_escape_string($conn,$_POST['uid']);
-                    // $utitle = mysqli_real_escape_string($conn,$_POST['utitle']);
-                    // $uemail = mysqli_real_escape_string($conn,$_POST['uemail']);
-                    // $uingredients = mysqli_real_escape_string($conn,$_POST['uingredients']);
-                    
-                    $utitle = $_POST['utitle'];
-                    $uemail = $_POST['uemail'];
-                    $uingredients = $_POST['uingredients'];
-                    
-                    //write query 
+            $fetched_id = $_GET['id'];
+            // $id = mysqli_real_escape_string($conn,$_POST['uid']);
+            // $utitle = mysqli_real_escape_string($conn,$_POST['utitle']);
+            // $uemail = mysqli_real_escape_string($conn,$_POST['uemail']);
+            // $uingredients = mysqli_real_escape_string($conn,$_POST['uingredients']);
             
-                    $queryupdate = "UPDATE pizzas SET title='$utitle', email = '$uemail', ingredients ='$uingredients' WHERE id = '$fetched_id'"; 
-                    //session
-                    $_SESSION['message'] = "Pizza Updated Successfully !";
-                    $_SESSION['msg_type'] = 'green-text';
-                        
-                    // make update query 
-        
-                    if(mysqli_query($conn, $queryupdate)){
-                        header("location:index.php");
-                    
-                    }else {
-                        echo 'error update' . mysqli_error($conn);
-                    }
-                }
+            $utitle = $_POST['utitle'];
+            $uemail = $_POST['uemail'];
+            $uingredients = $_POST['uingredients'];
             
+            //write query 
+    
+            $queryupdate = "UPDATE pizzas SET title='$utitle', email = '$uemail', ingredients ='$uingredients' WHERE id = '$fetched_id'"; 
+            //session
+            $_SESSION['message'] = "Pizza Updated Successfully !";
+            $_SESSION['msg_type'] = 'green-text';
+                
+            // make update query 
 
+            if(mysqli_query($conn, $queryupdate)){
+                header("location:index.php");
+            
+            }else {
+                echo 'error update' . mysqli_error($conn);
             }
+    }
+            
+
+}
 
 
 
@@ -83,7 +56,7 @@ if(isset($_GET['id'])){
 
 <?php if(isset($_GET['id'])): ?>
     
-<p class="center">ID Number - <?php echo $pizza['id'] ?></p>
+<!-- <p class="center">ID Number - <?php echo $pizza['id'] ?></p> -->
 <?php endif ?>
 <form action="" class="white" method="POST">
     <label for="email">Your Email:</label>

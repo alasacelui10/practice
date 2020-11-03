@@ -11,33 +11,25 @@ if(isset($_GET['id'])){
     if (isset($_POST['update']))  {
 
         // if there is no error then its time to save to database
-    
+        $fetched_id = $_GET['id'];
+        $utitle = $_POST['utitle'];
+        $uemail = $_POST['uemail'];
+        $uingredients = $_POST['uingredients'];
+        //write query 
 
-            $fetched_id = $_GET['id'];
-            // $id = mysqli_real_escape_string($conn,$_POST['uid']);
-            // $utitle = mysqli_real_escape_string($conn,$_POST['utitle']);
-            // $uemail = mysqli_real_escape_string($conn,$_POST['uemail']);
-            // $uingredients = mysqli_real_escape_string($conn,$_POST['uingredients']);
+        $queryupdate = "UPDATE pizzas SET title='$utitle', email = '$uemail', ingredients ='$uingredients' WHERE id = '$fetched_id'"; 
+        //session
+        $_SESSION['message'] = "Pizza Updated Successfully !";
+        $_SESSION['msg_type'] = 'green-text';
             
-            $utitle = $_POST['utitle'];
-            $uemail = $_POST['uemail'];
-            $uingredients = $_POST['uingredients'];
-            
-            //write query 
-    
-            $queryupdate = "UPDATE pizzas SET title='$utitle', email = '$uemail', ingredients ='$uingredients' WHERE id = '$fetched_id'"; 
-            //session
-            $_SESSION['message'] = "Pizza Updated Successfully !";
-            $_SESSION['msg_type'] = 'green-text';
-                
-            // make update query 
+        // make update query 
 
-            if(mysqli_query($conn, $queryupdate)){
-                header("location:index.php");
-            
-            }else {
-                echo 'error update' . mysqli_error($conn);
-            }
+        if(mysqli_query($conn, $queryupdate)){
+            header("location:index.php");
+        
+        }else {
+            echo 'error update' . mysqli_error($conn);
+        }
     }
             
 
